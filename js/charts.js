@@ -255,14 +255,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var labels = results.map(function(r) { return r.subsector; });
     var values = results.map(function(r) { return r.success_rate; });
 
-    /* Colour bars by subsector */
-    var barColours = [
-      COLOURS.k12,
-      COLOURS.otherTeachers,
-      COLOURS.postsecondary,
-      COLOURS.eduSupport,
-      COLOURS.library
-    ];
+    /* Map colours dynamically by subsector name */
+    var colourMap = {
+      'K-12 Teachers': COLOURS.k12,
+      'Other Teachers': COLOURS.otherTeachers,
+      'Postsecondary': COLOURS.postsecondary,
+      'Edu Support': COLOURS.eduSupport,
+      'Library': COLOURS.library
+    };
+    var barColours = labels.map(function(label) { return colourMap[label] || COLOURS.education; });
 
     new Chart(ctx, {
       type: 'bar',
