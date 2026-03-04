@@ -45,7 +45,7 @@
 
         <h2>Data source</h2>
         <p>The Anthropic Economic Index V4, released January 2026, contains two samples of one million conversations each: one from Claude.ai (consumer) and one from first-party API usage (developer). Both were drawn from the week of 13&ndash;20 November 2025.</p>
-        <p>This analysis primarily uses the Claude.ai sample. The API sample is used only for comparison in Section 3.7 of the Results. The full dataset is publicly available on <a href="https://huggingface.co/datasets/Anthropic/anthropic-economic-index" target="_blank">HuggingFace</a>.</p>
+        <p>This analysis primarily uses the Claude.ai sample. The API sample is used only for comparison in Section 3.6 of the Results. The full dataset is publicly available on <a href="https://huggingface.co/datasets/Anthropic/anthropic-economic-index" target="_blank">HuggingFace</a>.</p>
 
         <h2>How Clio classifies conversations</h2>
         <p>Anthropic's Clio tool processes each conversation through several classification steps:</p>
@@ -56,7 +56,7 @@
         </ul>
 
         <h2>Filtering to education</h2>
-        <p>Education tasks were identified by filtering to SOC Major Group 25 (Educational Instruction and Library Occupations). This yielded 266 of 3,170 total matched tasks, representing 15.21% of total conversation volume.</p>
+        <p>Education tasks were identified by filtering to SOC Major Group 25 (Educational Instruction and Library Occupations). This yielded 266 of 3,170 total matched tasks, representing 15.2% of total conversation volume.</p>
         <p>The 266 tasks were assigned to five subsectors based on their 4-digit SOC prefix:</p>
         <div class="metric-grid">
           <div class="metric-card">
@@ -68,11 +68,11 @@
             <div class="metric-label">K-12 Teachers (25-2xxx)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-value">23</div>
+            <div class="metric-value">26</div>
             <div class="metric-label">Other Teachers (25-3xxx)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-value">32</div>
+            <div class="metric-value">36</div>
             <div class="metric-label">Library (25-4xxx)</div>
           </div>
           <div class="metric-card">
@@ -80,10 +80,10 @@
             <div class="metric-label">Edu Support (25-9xxx)</div>
           </div>
         </div>
-        <p>Note: some O*NET tasks map to multiple SOC codes. A first-match deduplication was applied, which means 7 tasks that appear under multiple subsectors were counted only once. An independent review identified that this approach produces different subsector counts depending on sort order. The totals above reflect the deduplication used in this analysis.</p>
+        <p>Note: some O*NET tasks map to multiple SOC codes. Each task in the master dataset is assigned to a single subsector based on its primary SOC code. The totals above reflect these assignments and sum to 266.</p>
 
         <h2>Weighting and aggregation</h2>
-        <p>All aggregate statistics are volume-weighted using the <code>onet_task_pct</code> field, which represents each task's share of total conversation volume. This means high-traffic tasks (like "assist students with coursework outside class," which accounts for 2.74% of all volume alone) have proportionally greater influence on aggregate figures.</p>
+        <p>All aggregate statistics are volume-weighted using the <code>onet_task_pct</code> field, which represents each task's share of total conversation volume. This means high-traffic tasks (like "assist students with coursework outside class," which accounts for 2.73% of all volume alone) have proportionally greater influence on aggregate figures.</p>
         <p>The top 5 education tasks account for approximately 46% of all education conversation volume. This concentration means that aggregate patterns are heavily influenced by a small number of high-traffic tasks.</p>
 
         <h2>Renormalisation</h2>
@@ -108,6 +108,9 @@
         <h3>Baseline errors identified</h3>
         <p>An independent review of this analysis (see <a href="appendices.html#review">Appendix D</a>) identified that the global collaboration baseline numbers and sub-sector task counts contained errors related to renormalisation methodology and deduplication approach. These have been corrected. The review also flagged the V2-to-V4 trend comparison as methodologically unsound due to different classification models being used across versions. That comparison has been excluded from this report entirely.</p>
 
+        <h3>Education tasks outside SOC 25</h3>
+        <p>Filtering to SOC Major Group 25 captures teachers, lecturers, librarians, and education support workers. It does not capture education-adjacent roles classified elsewhere, such as school counsellors (SOC 21-1012), education administrators (SOC 11-9030), or training specialists in non-education sectors. The education share reported here is therefore a lower bound of education-related AI usage.</p>
+
         <h3>Volume concentration</h3>
         <p>The top 5 of 266 education tasks account for 46% of education conversation volume. Aggregate statistics are therefore driven disproportionately by a handful of high-traffic tasks. Subsector-level breakdowns partially address this, but the concentration remains a structural feature of the data.</p>
 
@@ -123,7 +126,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <a href="index.html" class="logo" style="color: white;">AlignED</a>
+          <a href="index.html" class="logo">AlignED</a>
           <p>Benchmarking AI models for educational practice.</p>
         </div>
         <div class="footer-links">

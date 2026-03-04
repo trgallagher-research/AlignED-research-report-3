@@ -3,7 +3,7 @@
     "title": "Task Success Rates by Education Subsector",
     "source": "Anthropic Economic Index V4 (release_2026_01_15)",
     "period": "Nov 13-20, 2025",
-    "notes": "Volume-weighted success rates. Success = AI addressed the user's request. Overall education: 76.0%, all tasks: 67.7%."
+    "notes": "Volume-weighted success rates. Success = AI addressed the user's request. Overall education: 76.0%, all tasks: 67.7%. Task counts reflect tasks with valid success data (235 of 266 total education tasks)."
   },
   "results": [
     { "subsector": "K-12 Teachers", "success_rate": 83.4, "task_count": 47 },

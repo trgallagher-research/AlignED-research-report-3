@@ -745,6 +745,14 @@ footer .container {
   color: white;
 }
 
+.footer-brand .logo {
+  color: white;
+}
+
+.footer-brand .logo:hover {
+  color: white;
+}
+
 .copyright {
   font-family: var(--font-sans);
   text-align: center;
@@ -765,6 +773,14 @@ footer .container {
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
 .mb-4 { margin-bottom: 2rem; }
+
+/* ── Cover Section Heading (centred, no border) ── */
+.cover-section-heading {
+  text-align: center;
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
 
 /* ── Reading Guide ── */
 .reading-guide {
