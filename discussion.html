@@ -74,7 +74,7 @@
         <p>Consider the five collaboration patterns through an educational lens:</p>
         <ul>
           <li><strong>Directive.</strong> A student asking "explain X" is classified as directive. But explaining a concept to someone who asked for it is a foundational educational interaction. The category captures conversational structure (one-shot request and response), not whether the exchange serves a learning purpose.</li>
-          <li><strong>Task iteration.</strong> A student who submits a draft, receives feedback, revises, and resubmits is engaging in a write-revise-improve cycle. This is a core pedagogical process, widely encouraged in writing instruction. The Clio classifier captures the iterative structure but cannot distinguish between "I want this polished for submission" and "I want to understand how to improve my writing."</li>
+          <li><strong>Task iteration.</strong> A student who submits a draft, receives feedback, revises, and resubmits is engaging in a write-revise-improve cycle. This is a core pedagogical process, widely encouraged in writing instruction. The Clio classifier captures the iterative structure but cannot distinguish between "I want this polished for submission" and "I want to understand how to improve my writing." Additionally, some iteration happens off-platform: a student might get feedback from Claude, revise in a word processor, and return with an updated draft. That revision work is invisible to Clio.</li>
           <li><strong>Learning.</strong> This category comes closest to capturing educational intent, but its definition and accuracy are unknown. At 23.7% of education interactions, it is present but not dominant.</li>
           <li><strong>Validation.</strong> A teacher checking whether AI-generated content is accurate, or a student verifying their own understanding against AI output, both fall here. The category is small (7.1%) but potentially valuable.</li>
           <li><strong>Feedback loop.</strong> The near-absence of feedback loops (1.6%) is striking. Extended adaptive exchanges are what educational technologists typically envision when they describe "AI as tutor." This pattern is almost non-existent in the data.</li>
@@ -100,7 +100,7 @@
 
         <p>Several analyses from the underlying data were excluded from this report:</p>
         <ul>
-          <li><strong>V2-to-V4 trend comparison.</strong> The V2 and V4 datasets used different classification models, making temporal comparisons uninterpretable. An independent review confirmed this concern. The comparison has been dropped entirely.</li>
+          <li><strong>V2-to-V4 trend comparison.</strong> The V2 and V4 datasets used different classification models, making temporal comparisons uninterpretable. The data verification confirmed this concern. The comparison has been dropped entirely.</li>
           <li><strong>Autonomy scores.</strong> AI autonomy scores show very small variance across education tasks (mean 3.34 vs 3.38 for all tasks). The difference is not interpretively meaningful.</li>
           <li><strong>Education years analysis.</strong> The finding that education tasks require education-level knowledge is circular and adds no interpretive value.</li>
           <li><strong>Task complexity (human-only time).</strong> The time analysis was excluded because the <code>human_with_ai_time</code> metric likely measures calendar span rather than active work time, making time ratios unreliable.</li>

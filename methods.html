@@ -48,15 +48,16 @@
         <p>This analysis primarily uses the Claude.ai sample. The API sample is used only for comparison in Section 3.6 of the Results. The full dataset is publicly available on <a href="https://huggingface.co/datasets/Anthropic/EconomicIndex" target="_blank">HuggingFace</a>.</p>
 
         <h2>How Clio classifies conversations</h2>
-        <p>Anthropic's Clio tool processes each conversation through several classification steps:</p>
+        <p>Anthropic uses a privacy-preserving classification system called Clio, which prompts Claude itself to categorise anonymised conversations along several dimensions. The methodology is described in Anthropic's <a href="https://www.anthropic.com/research/anthropic-economic-index-january-2026-report" target="_blank">Economic Index report</a> and accompanying <a href="https://assets.anthropic.com/m/2e23255f1e84ca97/original/Economic_Tasks_AI_Paper.pdf" target="_blank">research paper</a>. The key classifications are:</p>
         <ul>
-          <li><strong>Task matching.</strong> Each conversation is mapped to one or more O*NET occupational tasks. These tasks are standardised descriptions of work activities (e.g., "prepare course materials such as syllabi, homework assignments, and handouts").</li>
-          <li><strong>Collaboration pattern.</strong> Clio classifies the interaction into one of five patterns: <em>directive</em> (human gives instructions, AI executes), <em>task iteration</em> (back-and-forth refinement), <em>learning</em> (human seeks understanding), <em>validation</em> (human checks AI output), and <em>feedback loop</em> (extended exchange with adaptation). Two additional categories, <em>not_classified</em> and <em>none</em>, are excluded from this analysis and the remaining five are renormalised to 100%.</li>
+          <li><strong>Task matching.</strong> Each conversation is mapped to one or more tasks from the O*NET database, a US government catalogue of standardised work activities. For example, "prepare course materials such as syllabi, homework assignments, and handouts" is one O*NET task. Each task is linked to a Standard Occupational Classification (SOC) code, which groups tasks by occupation.</li>
+          <li><strong>Collaboration pattern.</strong> Clio classifies the interaction style into one of five patterns: <em>directive</em> (human gives instructions, AI executes), <em>task iteration</em> (back-and-forth refinement), <em>learning</em> (human seeks understanding), <em>validation</em> (human checks AI output), and <em>feedback loop</em> (extended exchange with adaptation). Two additional categories, <em>not_classified</em> and <em>none</em>, are excluded from this analysis and the remaining five are renormalised to 100% (see Renormalisation below).</li>
           <li><strong>Other metrics.</strong> Clio also estimates AI autonomy (1&ndash;5 scale), task success (binary), required education level, and use case (coursework, work, or personal).</li>
         </ul>
+        <p>Anthropic reports validating the classifier against human researchers on a sample of transcripts and against external benchmarks such as Bureau of Labor Statistics education data. However, no published error rates or inter-rater reliability figures are available for the specific classifications used in this analysis.</p>
 
         <h2>Filtering to education</h2>
-        <p>Education tasks were identified by filtering to SOC Major Group 25 (Educational Instruction and Library Occupations). This yielded 266 of 3,170 total matched tasks, representing 15.2% of total conversation volume.</p>
+        <p>Education tasks were identified by filtering to SOC Major Group 25: Educational Instruction and Library Occupations. SOC (Standard Occupational Classification) is a US system that groups all jobs into numbered categories. Group 25 covers teachers, lecturers, librarians, and education support workers. This filter yielded 266 of 3,170 total matched tasks, representing 15.2% of total conversation volume.</p>
         <p>The 266 tasks were assigned to five subsectors based on their 4-digit SOC prefix:</p>
         <div class="metric-grid">
           <div class="metric-card">
@@ -80,17 +81,16 @@
             <div class="metric-label">Edu Support (25-9xxx)</div>
           </div>
         </div>
-        <p>Note: some O*NET tasks map to multiple SOC codes. Each task in the master dataset is assigned to a single subsector based on its primary SOC code. The totals above reflect these assignments and sum to 266.</p>
+        <p>Some O*NET tasks appear under more than one occupation. For example, "develop instructional materials" could belong to both a postsecondary lecturer and an education support worker. To avoid counting the same task twice, each task is assigned to a single subsector based on its primary SOC code. The totals above reflect these deduplicated assignments and sum to 266.</p>
 
         <h2>Weighting and aggregation</h2>
-        <p>All aggregate statistics are volume-weighted using the <code>onet_task_pct</code> field, which represents each task's share of total conversation volume. This means high-traffic tasks (like "assist students with coursework outside class," which accounts for 2.73% of all volume alone) have proportionally greater influence on aggregate figures.</p>
-        <p>The top 5 education tasks account for approximately 46% of all education conversation volume. This concentration means that aggregate patterns are heavily influenced by a small number of high-traffic tasks.</p>
+        <p>Not all 266 tasks generate the same amount of conversation. Some tasks, like "assist students with coursework outside class," account for a large share of total volume, while others are rarely seen. When we calculate averages and totals, each task's contribution is weighted by how much traffic it actually receives. This prevents a rarely-used task from having the same influence as one that drives thousands of conversations.</p>
+        <p>This matters because the data is concentrated: the top 5 education tasks account for approximately 46% of all education conversation volume. Aggregate statistics are therefore shaped disproportionately by a small number of high-traffic tasks.</p>
 
         <h2>Renormalisation</h2>
-        <p>Collaboration pattern percentages exclude the <em>not_classified</em> and <em>none</em> categories. The five substantive patterns (directive, task iteration, learning, validation, feedback loop) are renormalised to sum to 100%. This approach makes patterns comparable across tasks but means the reported percentages overstate the share of conversations where a substantive pattern was identified.</p>
+        <p>Clio sometimes cannot classify a conversation's interaction style, labelling it <em>not_classified</em> or <em>none</em>. We exclude these and recalculate the five named patterns (directive, task iteration, learning, validation, feedback loop) so they sum to 100%. This makes patterns comparable across tasks, but it means the reported percentages are higher than they would be if unclassified conversations were included. The exact formula is in <a href="appendices.html#methodology">Appendix C</a>.</p>
 
         <h2 id="limitations">Limitations</h2>
-        <p>These limitations are not caveats appended for form. They affect the interpretation of every finding in this report.</p>
 
         <h3>Single platform</h3>
         <p>This data covers Claude.ai only. ChatGPT, Gemini, Copilot, and other tools serve different and likely larger education user populations. Claude.ai's market share, interface design, and model behaviour all shape the patterns observed here. Nothing in this report can be assumed to generalise to other platforms.</p>
@@ -99,14 +99,15 @@
         <p>The sample covers 13&ndash;20 November 2025. In the Northern Hemisphere, this is late semester, when assignment loads peak. In parts of the Southern Hemisphere, this is exam season. Usage patterns almost certainly vary across the academic calendar. A January or June sample would likely look different.</p>
 
         <h3>Classifier accuracy unknown</h3>
-        <p>Clio's conversation-to-task mapping and collaboration pattern classification are proprietary. No published validation studies, error rates, or inter-rater reliability figures exist for these classifiers. We report Clio's classifications as given, but cannot verify their accuracy.</p>
+        <p>Although Anthropic reports validating Clio against human researchers and external benchmarks, no published error rates or inter-rater reliability figures are available for the specific classifications used here. We report Clio's classifications as given.</p>
 
-        <h3>Interaction pattern does not equal learning intent</h3>
-        <p>This is the most important limitation. A student who types "explain the causes of World War I" is classified as making a <em>directive</em> request. But that student may be learning. A student who iterates on an essay draft through multiple exchanges is classified as <em>task iteration</em>. But write-revise-improve cycles are a core pedagogical process.</p>
-        <p>The collaboration pattern categories describe conversational structure. They do not measure educational intent or learning outcomes. The Discussion section addresses this interpretation gap in detail.</p>
+        <h3>Interaction patterns describe conversation structure</h3>
+        <p>Clio's collaboration patterns (directive, task iteration, etc.) describe the structure of the conversation, not the user's intent or whether learning occurred. A student asking "explain the causes of World War I" is classified as <em>directive</em>, but the student's purpose may well be to learn. Similarly, <em>task iteration</em> — where a student drafts, gets feedback, and revises — is a core pedagogical process, even though the label sounds mechanical.</p>
+        <p>There is also a visibility gap. If a student asks Claude for feedback on a paragraph, revises it in a separate document, and returns with an updated version, that revision work happens outside the conversation. Clio can only classify what appears in the transcript. The actual learning process may be richer than what the data captures.</p>
+        <p>The Discussion section addresses this interpretation gap in detail.</p>
 
-        <h3>Baseline errors identified</h3>
-        <p>An independent review of this analysis (see <a href="appendices.html#review">Appendix D</a>) identified that the global collaboration baseline numbers and sub-sector task counts contained errors related to renormalisation methodology and deduplication approach. These have been corrected. The review also flagged the V2-to-V4 trend comparison as methodologically unsound due to different classification models being used across versions. That comparison has been excluded from this report entirely.</p>
+        <h3>Errors identified during verification</h3>
+        <p>An automated data verification using Claude and Gemini (see <a href="appendices.html#review">Appendix D</a>) identified that the global collaboration baseline numbers and subsector task counts in an earlier draft contained errors related to renormalisation methodology and deduplication approach. These have been corrected. The verification also flagged the V2-to-V4 trend comparison as methodologically unsound due to different classification models being used across versions. That comparison has been excluded from this report entirely.</p>
 
         <h3>Education tasks outside SOC 25</h3>
         <p>Filtering to SOC Major Group 25 captures teachers, lecturers, librarians, and education support workers. It does not capture education-adjacent roles classified elsewhere, such as school counsellors (SOC 21-1012), education administrators (SOC 11-9030), or training specialists in non-education sectors. The education share reported here is therefore a lower bound of education-related AI usage.</p>
