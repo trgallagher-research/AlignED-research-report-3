@@ -19,6 +19,16 @@ import json
 import sys
 import os
 
+# python-dotenv lets us read a local .env file (which is gitignored) so the
+# API key never has to live inside this script. Install with: pip install python-dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # python-dotenv is optional; if it's not installed we just rely on real
+    # environment variables set in the shell.
+    pass
+
 # -----------------------------------------------------------------------
 # Configuration
 # -----------------------------------------------------------------------
